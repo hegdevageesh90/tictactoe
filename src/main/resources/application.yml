@@ -6,6 +6,3 @@ tictactoe:
     api:
       path: "/api/tictactoe/game"
       v1: "/v1"
-
-server:
-  port: 8080
