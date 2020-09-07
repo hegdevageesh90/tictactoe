@@ -7,8 +7,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class GameBegunResponse
+public class MoveResponse
 {
 	private String message;
-	private String gameId;
+	private State currentState;
 }

@@ -4,5 +4,4 @@ tictactoe:
       path: "/api/tictactoe/manager/v1"
   game:
     api:
-      path: "/api/tictactoe/game"
-      v1: "/v1"
+      path: "/api/tictactoe/game/v1"

@@ -2,13 +2,16 @@ package com.intuit.interview.tictactoe.dto.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-public class GameBegunResponse
+public class State
 {
-	private String message;
-	private String gameId;
+	private List<String> cells;
 }

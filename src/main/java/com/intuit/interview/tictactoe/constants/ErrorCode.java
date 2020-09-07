@@ -1,5 +1,6 @@
 package com.intuit.interview.tictactoe.constants;
 
-public class ErrorCode
+public enum ErrorCode
 {
+	COMPUTER_MOVE_FAILED
 }
