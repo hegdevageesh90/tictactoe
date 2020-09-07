@@ -19,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Objects;
+import java.util.Random;
 
 import static com.intuit.interview.tictactoe.bo.PositionBO.*;
 import static com.intuit.interview.tictactoe.constants.ErrorCode.COMPUTER_MOVE_FAILED;
@@ -68,7 +68,7 @@ public class GameService
 		Position position = request.getPosition();
 		int[] moveArr = new int[] { position.getRow(), position.getCol() };
 
-		Game currentGame = getCurrentGame(request.getGameId());
+		Game currentGame = gamesDAO.getGameById(request.getGameId());
 		if (Objects.isNull(currentGame)) {
 			return new MoveResponse(NO_GAME_ERROR, new State());
 		}
@@ -232,11 +232,5 @@ public class GameService
 		}
 	}
 
-	private Game getCurrentGame(String gameId)
-	{
-		Optional<Game> currentGame = gamesDAO.getGames().stream()
-				.filter(game -> game.getGameId().equalsIgnoreCase(gameId))
-				.findFirst();
-		return currentGame.orElse(null);
-	}
+
 }

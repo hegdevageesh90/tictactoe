@@ -24,8 +24,7 @@ public class GameManagerController
 	@PostMapping("/startGame")
 	@ResponseStatus(value = CREATED)
 	public ServiceResponse<GameBegunResponse> startGame(
-			@RequestBody
-					GameBeginRequest request) throws ServiceException
+			@RequestBody GameBeginRequest request) throws ServiceException
 	{
 		GameBegunResponse gameBegunResponse = gameService.startAGame(request);
 		return new ServiceResponse<>(gameBegunResponse);

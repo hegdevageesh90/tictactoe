@@ -3,7 +3,10 @@ package com.intuit.interview.tictactoe.bo;
 import com.intuit.interview.tictactoe.dto.api.response.State;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import static com.intuit.interview.tictactoe.bo.PositionBO.EMPTY;
 
