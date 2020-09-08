@@ -15,4 +15,7 @@ public class Constants
 	public static final String NO_GAME_ERROR = "No Game with given ID exists";
 
 	public static final String VALIDATION_ERROR = "One/more required attributes missing in the payload/request";
+
+	public static final String MARK_WINS_GAME = "This mark can win the game for user";
+	public static final String MARK_NOT_WINS_GAME = "This mark cannot win the game for user";
 }

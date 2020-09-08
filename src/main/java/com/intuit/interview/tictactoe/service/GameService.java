@@ -227,6 +227,33 @@ public class GameService
 		}
 	}
 
+	public MoveResponse checkIfMarkWinsGame(MoveRequest request)
+			throws ServiceException
+	{
+
+		Position position = request.getPosition();
+		int[] moveArr = new int[] { position.getRow(), position.getCol() };
+
+		Game currentGame = gamesDAO.getGameById(request.getGameId());
+		if (Objects.isNull(currentGame)) {
+			log.error("{}", NO_GAME_ERROR);
+			throw new ServiceException(NO_GAME, NO_GAME_ERROR);
+		}
+		Board board = currentGame.getBoard();
+
+		try {
+			return board.checkIfMarkWinsGame(moveArr[0], moveArr[1]) ?
+					new MoveResponse(MARK_WINS_GAME,
+							currentGame.getBoard().boardPayload()) :
+					new MoveResponse(MARK_NOT_WINS_GAME,
+							currentGame.getBoard().boardPayload());
+
+		} catch (Exception e) {
+			log.error("{}", e.getMessage());
+			throw new ServiceException(PLAYER_MARK_FAILURE, PLAYER_MARK_NOK, e);
+		}
+	}
+
 	private void doMakeAMove(int x, int y, Board board) throws ServiceException
 	{
 		try {

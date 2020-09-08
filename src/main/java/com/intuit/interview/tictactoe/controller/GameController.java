@@ -48,4 +48,16 @@ public class GameController
 		}).getOrElseGet(e -> new ServiceResponse<StateResponse>(null,
 				(ServiceException) e));
 	}
+
+	@PostMapping("/checkWin")
+	@ResponseStatus(value = OK)
+	public ServiceResponse<MoveResponse> checkWin(
+			@RequestBody MoveRequest request)
+	{
+		return Try.ofCallable(() -> {
+			MoveResponse moveResponse = gameService.checkIfMarkWinsGame(request);
+			return new ServiceResponse<>(moveResponse);
+		}).getOrElseGet(e -> new ServiceResponse<MoveResponse>(null,
+				(ServiceException) e));
+	}
 }

@@ -46,21 +46,12 @@ public class Board
 	public void setPosition(int row, int col, PositionBO positionBO)
 			throws Exception
 	{
-		if (row >= size || row < 0) {
-			throw new Exception("Invalid move: row outside of board range.");
-		}
+		checkOutOfBoard(row, col);
 
-		if (col >= size || col < 0) {
-			throw new Exception("Invalid move: column outside of board range.");
-		}
-
-		if (board[row][col] != EMPTY) {
-			throw new Exception(
-					"Invalid move: selected location is already marked.");
-		}
-
+		//make a mark
 		board[row][col] = positionBO;
 
+		//rows and columnss
 		sums[row] += positionBO.value;
 		sums[size + col] += positionBO.value;
 
@@ -82,7 +73,6 @@ public class Board
 				return PositionBO.O;
 			}
 		}
-
 		return EMPTY;
 	}
 
@@ -134,5 +124,53 @@ public class Board
 	public int[] getSums()
 	{
 		return sums;
+	}
+
+	public boolean checkIfMarkWinsGame(int row, int col) throws Exception
+	{
+		checkOutOfBoard(row, col);
+
+		board[row][col] = PositionBO.X;
+
+		sums[row] += PositionBO.X.value;
+		sums[size + col] += PositionBO.X.value;
+
+		if (row == col)
+			sums[2 * size] += PositionBO.X.value;
+
+		if (size - col - 1 == row)
+			sums[2 * size + 1] += PositionBO.X.value;
+
+		PositionBO positionBO = gameWon();
+
+		//Revert the board
+		board[row][col] = EMPTY;
+
+		sums[row] -= PositionBO.X.value;
+		sums[size + col] -= PositionBO.X.value;
+
+		if (row == col)
+			sums[2 * size] -= PositionBO.X.value;
+
+		if (size - col - 1 == row)
+			sums[2 * size + 1] -= PositionBO.X.value;
+
+		return positionBO != EMPTY;
+	}
+
+	private void checkOutOfBoard(int row, int col) throws Exception
+	{
+		if (row >= size || row < 0) {
+			throw new Exception("Invalid move: row outside of board range.");
+		}
+
+		if (col >= size || col < 0) {
+			throw new Exception("Invalid move: column outside of board range.");
+		}
+
+		if (board[row][col] != EMPTY) {
+			throw new Exception(
+					"Invalid move: selected location is already marked.");
+		}
 	}
 }
