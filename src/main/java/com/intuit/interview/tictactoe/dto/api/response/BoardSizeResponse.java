@@ -20,6 +20,7 @@ public class BoardSizeResponse
 		for (BoardSize boardSize : BoardSize.values())
 		{
 			responseString += boardSize.name() + "(" + count + "), ";
+			count++;
 		}
 		responseString += "etc.";
 
