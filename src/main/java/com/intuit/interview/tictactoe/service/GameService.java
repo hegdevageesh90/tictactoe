@@ -7,9 +7,9 @@ import com.intuit.interview.tictactoe.dao.GamePlayerMapping;
 import com.intuit.interview.tictactoe.dao.GamesDAO;
 import com.intuit.interview.tictactoe.dao.PlayersDAO;
 import com.intuit.interview.tictactoe.dto.api.request.GameBeginRequest;
-import com.intuit.interview.tictactoe.dto.api.request.MoveRequest;
+import com.intuit.interview.tictactoe.dto.api.request.MarkRequest;
 import com.intuit.interview.tictactoe.dto.api.response.GameBegunResponse;
-import com.intuit.interview.tictactoe.dto.api.response.MoveResponse;
+import com.intuit.interview.tictactoe.dto.api.response.MarkResponse;
 import com.intuit.interview.tictactoe.dto.exception.ServiceException;
 import com.intuit.interview.tictactoe.dto.internal.Player;
 import com.intuit.interview.tictactoe.dto.internal.Position;
@@ -65,12 +65,12 @@ public class GameService
 		return new GameBegunResponse(GAME_STARTED, game.getGameId());
 	}
 
-	public MoveResponse registerUserMark(MoveRequest request)
+	public MarkResponse registerUserMark(MarkRequest request)
 			throws ServiceException
 	{
-		utilities.validateMoveRequest(request);
+		utilities.validateMarkRequest(request);
 		Position position = request.getPosition();
-		int[] moveArr = new int[] { position.getRow(), position.getCol() };
+		int[] markArr = new int[] { position.getRow(), position.getCol() };
 
 		Game currentGame = gamesDAO.getGameById(request.getGameId());
 		if (Objects.isNull(currentGame)) {
@@ -80,11 +80,11 @@ public class GameService
 		Board board = currentGame.getBoard();
 
 		try {
-			board.setPosition(moveArr[0], moveArr[1], X);
+			board.setPosition(markArr[0], markArr[1], X);
 
 			if (board.isDraw()) {
 				currentGame.setWinner("Draw");
-				return new MoveResponse(DRAW,
+				return new MarkResponse(DRAW,
 						currentGame.getBoard().boardPayload());
 			}
 
@@ -106,18 +106,18 @@ public class GameService
 
 		if (winner != EMPTY) {
 			currentGame.setWinner(winner.mark == 'X' ? "User" : "Computer");
-			return new MoveResponse(
+			return new MarkResponse(
 					winner.mark == 'X' ? "User" : "Computer" + GAME_WON,
 					currentGame.getBoard().boardPayload());
 		}
 
 		if (board.isDraw()) {
 			currentGame.setWinner("Draw");
-			return new MoveResponse(DRAW,
+			return new MarkResponse(DRAW,
 					currentGame.getBoard().boardPayload());
 		}
 
-		return new MoveResponse(MARK_OK, currentGame.getBoard().boardPayload());
+		return new MarkResponse(MARK_OK, currentGame.getBoard().boardPayload());
 	}
 
 	private void computerMarkBoard(Board board) throws ServiceException
@@ -126,13 +126,13 @@ public class GameService
 		int size = board.getSize();
 		if (board.empty()) {
 			Random rand = new Random();
-			doMakeAMove(rand.nextInt(size), rand.nextInt(size), board);
+			doMakeAMark(rand.nextInt(size), rand.nextInt(size), board);
 			return;
 		}
 
 		// Favor the middle slot if it is not taken yet.
 		if (board.getBoard()[1][1] == EMPTY) {
-			doMakeAMove(1, 1, board);
+			doMakeAMark(1, 1, board);
 			return;
 		}
 
@@ -156,9 +156,9 @@ public class GameService
 		else if (board.getSums()[largest] < size / 2 + 1) {
 			rand = new Random();
 			try {
-				doMakeAMove(rand.nextInt(size), rand.nextInt(size), board);
+				doMakeAMark(rand.nextInt(size), rand.nextInt(size), board);
 			} catch (Exception e) {
-				doMakeAMove(rand.nextInt(size), rand.nextInt(size), board);
+				doMakeAMark(rand.nextInt(size), rand.nextInt(size), board);
 			}
 
 			return;
@@ -174,7 +174,7 @@ public class GameService
 						board.setPosition(largest, pos, O);
 						return;
 					} catch (Exception e) {
-						String message = "Computer failed to make it's move";
+						String message = "Computer failed to make it's mark";
 						e.printStackTrace();
 						log.error(message);
 						throw new ServiceException(COMPUTER_MARK_FAILURE,
@@ -227,12 +227,12 @@ public class GameService
 		}
 	}
 
-	public MoveResponse checkIfMarkWinsGame(MoveRequest request)
+	public MarkResponse checkIfMarkWinsGame(MarkRequest request)
 			throws ServiceException
 	{
 
 		Position position = request.getPosition();
-		int[] moveArr = new int[] { position.getRow(), position.getCol() };
+		int[] markArr = new int[] { position.getRow(), position.getCol() };
 
 		Game currentGame = gamesDAO.getGameById(request.getGameId());
 		if (Objects.isNull(currentGame)) {
@@ -242,10 +242,10 @@ public class GameService
 		Board board = currentGame.getBoard();
 
 		try {
-			return board.checkIfMarkWinsGame(moveArr[0], moveArr[1]) ?
-					new MoveResponse(MARK_WINS_GAME,
+			return board.checkIfMarkWinsGame(markArr[0], markArr[1]) ?
+					new MarkResponse(MARK_WINS_GAME,
 							currentGame.getBoard().boardPayload()) :
-					new MoveResponse(MARK_NOT_WINS_GAME,
+					new MarkResponse(MARK_NOT_WINS_GAME,
 							currentGame.getBoard().boardPayload());
 
 		} catch (Exception e) {
@@ -254,12 +254,12 @@ public class GameService
 		}
 	}
 
-	private void doMakeAMove(int x, int y, Board board) throws ServiceException
+	private void doMakeAMark(int x, int y, Board board) throws ServiceException
 	{
 		try {
 			board.setPosition(x, y, O);
 		} catch (Exception e) {
-			String message = "Computer failed to make it's move";
+			String message = "Computer failed to make it's mark";
 			e.printStackTrace();
 			log.error(message);
 			throw new ServiceException(COMPUTER_MARK_FAILURE, message, e);

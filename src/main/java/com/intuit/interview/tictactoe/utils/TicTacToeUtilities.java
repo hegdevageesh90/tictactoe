@@ -1,7 +1,7 @@
 package com.intuit.interview.tictactoe.utils;
 
 import com.intuit.interview.tictactoe.dto.api.request.GameBeginRequest;
-import com.intuit.interview.tictactoe.dto.api.request.MoveRequest;
+import com.intuit.interview.tictactoe.dto.api.request.MarkRequest;
 import com.intuit.interview.tictactoe.dto.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,7 +30,7 @@ public class TicTacToeUtilities
 		}
 	}
 
-	public void validateMoveRequest(MoveRequest request) throws ServiceException
+	public void validateMarkRequest(MarkRequest request) throws ServiceException
 	{
 		if (StringUtils.isEmpty(request.getGameId()) || Objects
 				.isNull(request.getPosition())) {

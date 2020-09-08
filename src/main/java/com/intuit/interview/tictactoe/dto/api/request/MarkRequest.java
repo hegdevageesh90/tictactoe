@@ -8,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MoveRequest
+public class MarkRequest
 {
 	private String gameId;
 	private Position position;
