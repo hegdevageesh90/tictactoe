@@ -10,6 +10,9 @@ import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
+/**
+ * @author Vageesh Hegde
+ */
 @Getter
 @Setter
 public class ServiceResponse<T>

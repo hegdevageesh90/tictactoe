@@ -1,5 +1,10 @@
 package com.intuit.interview.tictactoe.utils;
 
+/**
+ * Literals
+ *
+ * @author Vageesh Hegde
+ */
 public class Constants
 {
 	public static final String GAME_STARTED = "Game begun successfully. Make your first mark";

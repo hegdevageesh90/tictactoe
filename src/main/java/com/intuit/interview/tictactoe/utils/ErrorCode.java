@@ -1,5 +1,10 @@
-package com.intuit.interview.tictactoe.constants;
+package com.intuit.interview.tictactoe.utils;
 
+/**
+ * Error Code enum
+ *
+ * @author Vageesh Hegde
+ */
 public enum ErrorCode
 {
 	COMPUTER_MARK_FAILURE,

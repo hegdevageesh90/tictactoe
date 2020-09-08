@@ -6,6 +6,11 @@ import com.intuit.interview.tictactoe.dto.api.response.StateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service Class for all board related functionalities.
+ *
+ * @author Vageesh Hegde
+ */
 @Service
 public class BoardService
 {

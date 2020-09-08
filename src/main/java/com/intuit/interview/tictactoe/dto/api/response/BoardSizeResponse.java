@@ -4,6 +4,9 @@ import com.intuit.interview.tictactoe.dto.internal.BoardSize;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author Vageesh Hegde
+ */
 @Getter
 @Setter
 public class BoardSizeResponse

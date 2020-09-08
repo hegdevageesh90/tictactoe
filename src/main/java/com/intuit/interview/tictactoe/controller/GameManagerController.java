@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+/**
+ * REST Controller class that exposes Game Management related APIs
+ *
+ * @author Vageesh Hegde
+ */
 @Slf4j
 @RestController
 @RequestMapping("${tictactoe.manager.api.path}")

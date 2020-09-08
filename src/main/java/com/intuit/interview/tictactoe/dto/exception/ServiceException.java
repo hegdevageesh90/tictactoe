@@ -1,8 +1,13 @@
 package com.intuit.interview.tictactoe.dto.exception;
 
-import com.intuit.interview.tictactoe.constants.ErrorCode;
+import com.intuit.interview.tictactoe.utils.ErrorCode;
 import lombok.Getter;
 
+/**
+ * Module specific Service Exception that wraps {@code}Exception
+ *
+ * @author Vageesh Hegde
+ */
 @Getter
 public class ServiceException extends Exception
 {
