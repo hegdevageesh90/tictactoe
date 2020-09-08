@@ -21,7 +21,8 @@ public class TicTacToeUtilities
 	public void validateGameBeginRequest(GameBeginRequest request)
 			throws ServiceException
 	{
-		if (request.getSize() % 2 == 0 || StringUtils
+		//request.getSize() % 2 == 0 ||
+		if ( StringUtils
 				.isEmpty(request.getPlayer().getName()) || StringUtils
 				.isEmpty(request.getPlayer().getEmail()) || StringUtils
 				.isEmpty(request.getPlayer().getGender().name())) {
