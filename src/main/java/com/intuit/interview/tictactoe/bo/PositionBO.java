@@ -1,5 +1,10 @@
 package com.intuit.interview.tictactoe.bo;
 
+/**
+ * Position BO : to keep track of the positions
+ *
+ * @author Vageesh Hegde
+ */
 public enum PositionBO
 {
 	EMPTY(0, ' '), X(1, 'X'), O(-1, 'O');

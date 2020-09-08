@@ -7,6 +7,11 @@ import com.intuit.interview.tictactoe.utils.TicTacToeUtilities;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration Class defining required beans.
+ * 
+ * @author Vageesh Hegde
+ */
 @Configuration
 public class TicTacToeConfiguration
 {

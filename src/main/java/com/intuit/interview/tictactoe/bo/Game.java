@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Game BO
+ *
+ * @author Vageesh Hegde
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

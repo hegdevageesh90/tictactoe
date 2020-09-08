@@ -10,6 +10,11 @@ import java.util.Objects;
 
 import static com.intuit.interview.tictactoe.bo.PositionBO.EMPTY;
 
+/**
+ * Board BO : to help keep track of the current board state
+ *
+ * @author Vageesh Hegde
+ */
 @Getter
 public class Board
 {

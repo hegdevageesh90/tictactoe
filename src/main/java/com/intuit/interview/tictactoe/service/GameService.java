@@ -22,9 +22,14 @@ import java.util.Objects;
 import java.util.Random;
 
 import static com.intuit.interview.tictactoe.bo.PositionBO.*;
-import static com.intuit.interview.tictactoe.constants.ErrorCode.*;
+import static com.intuit.interview.tictactoe.utils.ErrorCode.*;
 import static com.intuit.interview.tictactoe.utils.Constants.*;
 
+/**
+ * Service Class for all Game related functionalities.
+ *
+ * @author Vageesh Hegde
+ */
 @Slf4j
 @Service
 public class GameService

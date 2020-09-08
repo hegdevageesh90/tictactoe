@@ -4,6 +4,12 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * DAO for Game <-> Player mapping. Is an intersection between Game and Player
+ * tables
+ *
+ * @author Vageesh Hegde
+ */
 public class GamePlayerMapping
 {
 	private Map<String, String> activeGamesMap;

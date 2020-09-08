@@ -8,9 +8,14 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.intuit.interview.tictactoe.constants.ErrorCode.VALIDATION_FAILURE;
+import static com.intuit.interview.tictactoe.utils.ErrorCode.VALIDATION_FAILURE;
 import static com.intuit.interview.tictactoe.utils.Constants.VALIDATION_ERROR;
 
+/**
+ * Utility functions used across the module.
+ *
+ * @author Vageesh
+ */
 public class TicTacToeUtilities
 {
 	public String generateUUID()

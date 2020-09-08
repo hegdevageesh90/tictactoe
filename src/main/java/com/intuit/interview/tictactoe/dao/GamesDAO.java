@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO for Games table.
+ * Currently using in-memory DS.
+ *
+ * @author Vageesh Hegde
+ */
 public class GamesDAO
 {
 	private List<Game> games;

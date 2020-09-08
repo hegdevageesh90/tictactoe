@@ -6,6 +6,12 @@ import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * DAO for Players table.
+ * Currently using in-memory DS.
+ *
+ * @author Vageesh Hegde
+ */
 public class PlayersDAO
 {
 	private Set<Player> players;
