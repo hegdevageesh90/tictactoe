@@ -161,16 +161,16 @@ public class Board
 	private void checkOutOfBoard(int row, int col) throws Exception
 	{
 		if (row >= size || row < 0) {
-			throw new Exception("Invalid move: row outside of board range.");
+			throw new Exception("Invalid mark: row outside of board range.");
 		}
 
 		if (col >= size || col < 0) {
-			throw new Exception("Invalid move: column outside of board range.");
+			throw new Exception("Invalid mark: column outside of board range.");
 		}
 
 		if (board[row][col] != EMPTY) {
 			throw new Exception(
-					"Invalid move: selected location is already marked.");
+					"Invalid mark: selected location is already marked.");
 		}
 	}
 }

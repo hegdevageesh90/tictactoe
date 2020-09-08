@@ -7,7 +7,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MoveResponse
+public class MarkResponse
 {
 	private String message;
 	private State currentState;

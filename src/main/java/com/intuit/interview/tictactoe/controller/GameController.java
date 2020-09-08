@@ -1,7 +1,7 @@
 package com.intuit.interview.tictactoe.controller;
 
-import com.intuit.interview.tictactoe.dto.api.request.MoveRequest;
-import com.intuit.interview.tictactoe.dto.api.response.MoveResponse;
+import com.intuit.interview.tictactoe.dto.api.request.MarkRequest;
+import com.intuit.interview.tictactoe.dto.api.response.MarkResponse;
 import com.intuit.interview.tictactoe.dto.api.response.ServiceResponse;
 import com.intuit.interview.tictactoe.dto.api.response.StateResponse;
 import com.intuit.interview.tictactoe.dto.exception.ServiceException;
@@ -27,13 +27,14 @@ public class GameController
 
 	@PostMapping("/makeMark")
 	@ResponseStatus(value = OK)
-	public ServiceResponse<MoveResponse> makeAMark(
-			@RequestBody MoveRequest request)
+	public ServiceResponse<MarkResponse> makeAMark(
+			@RequestBody
+					MarkRequest request)
 	{
 		return Try.ofCallable(() -> {
-			MoveResponse moveResponse = gameService.registerUserMark(request);
-			return new ServiceResponse<>(moveResponse);
-		}).getOrElseGet(e -> new ServiceResponse<MoveResponse>(null,
+			MarkResponse markResponse = gameService.registerUserMark(request);
+			return new ServiceResponse<>(markResponse);
+		}).getOrElseGet(e -> new ServiceResponse<MarkResponse>(null,
 				(ServiceException) e));
 	}
 
@@ -51,13 +52,14 @@ public class GameController
 
 	@PostMapping("/checkWin")
 	@ResponseStatus(value = OK)
-	public ServiceResponse<MoveResponse> checkWin(
-			@RequestBody MoveRequest request)
+	public ServiceResponse<MarkResponse> checkWin(
+			@RequestBody
+					MarkRequest request)
 	{
 		return Try.ofCallable(() -> {
-			MoveResponse moveResponse = gameService.checkIfMarkWinsGame(request);
-			return new ServiceResponse<>(moveResponse);
-		}).getOrElseGet(e -> new ServiceResponse<MoveResponse>(null,
+			MarkResponse markResponse = gameService.checkIfMarkWinsGame(request);
+			return new ServiceResponse<>(markResponse);
+		}).getOrElseGet(e -> new ServiceResponse<MarkResponse>(null,
 				(ServiceException) e));
 	}
 }
