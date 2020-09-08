@@ -7,6 +7,7 @@ import com.intuit.interview.tictactoe.dto.api.response.StateResponse;
 import com.intuit.interview.tictactoe.dto.exception.ServiceException;
 import com.intuit.interview.tictactoe.service.BoardService;
 import com.intuit.interview.tictactoe.service.GameService;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +28,24 @@ public class GameController
 	@PostMapping("/makeMark")
 	@ResponseStatus(value = OK)
 	public ServiceResponse<MoveResponse> makeAMark(
-			@RequestBody MoveRequest request) throws ServiceException
+			@RequestBody MoveRequest request)
 	{
-		MoveResponse moveResponse = gameService.registerUserMark(request);
-		return new ServiceResponse<>(moveResponse);
+		return Try.ofCallable(() -> {
+			MoveResponse moveResponse = gameService.registerUserMark(request);
+			return new ServiceResponse<>(moveResponse);
+		}).getOrElseGet(e -> new ServiceResponse<MoveResponse>(null,
+				(ServiceException) e));
 	}
 
 	@GetMapping("/currentState/{gameId}")
 	@ResponseStatus(value = OK)
 	public ServiceResponse<StateResponse> getCurrentState(
-			@PathVariable("gameId") String gameId) throws ServiceException
+			@PathVariable("gameId") String gameId)
 	{
-		StateResponse stateResponse = boardService.getCurrentState(gameId);
-		return new ServiceResponse<>(stateResponse);
+		return Try.ofCallable(() -> {
+			StateResponse stateResponse = boardService.getCurrentState(gameId);
+			return new ServiceResponse<>(stateResponse);
+		}).getOrElseGet(e -> new ServiceResponse<StateResponse>(null,
+				(ServiceException) e));
 	}
 }

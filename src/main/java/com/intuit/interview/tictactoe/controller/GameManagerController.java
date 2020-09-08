@@ -6,6 +6,7 @@ import com.intuit.interview.tictactoe.dto.api.response.GameBegunResponse;
 import com.intuit.interview.tictactoe.dto.api.response.ServiceResponse;
 import com.intuit.interview.tictactoe.dto.exception.ServiceException;
 import com.intuit.interview.tictactoe.service.GameService;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,18 +25,26 @@ public class GameManagerController
 	@PostMapping("/startGame")
 	@ResponseStatus(value = CREATED)
 	public ServiceResponse<GameBegunResponse> startGame(
-			@RequestBody GameBeginRequest request) throws ServiceException
+			@RequestBody GameBeginRequest request)
 	{
-		GameBegunResponse gameBegunResponse = gameService.startAGame(request);
-		return new ServiceResponse<>(gameBegunResponse);
+		return Try.ofCallable(() -> {
+			GameBegunResponse gameBegunResponse = gameService
+					.startAGame(request);
+			return new ServiceResponse<>(gameBegunResponse);
+		}).getOrElseGet(e -> new ServiceResponse<GameBegunResponse>(null,
+				(ServiceException) e));
+
 	}
 
 	@GetMapping("/getSizes")
 	@ResponseStatus(value = OK)
 	public ServiceResponse<BoardSizeResponse> getBoardSizes()
-			throws ServiceException
 	{
-		BoardSizeResponse boardSizeResponse = new BoardSizeResponse();
-		return new ServiceResponse<>(boardSizeResponse);
+		return Try.ofCallable(() -> {
+			BoardSizeResponse boardSizeResponse = new BoardSizeResponse();
+			return new ServiceResponse<>(boardSizeResponse);
+		}).getOrElseGet(e -> new ServiceResponse<BoardSizeResponse>(null,
+				(ServiceException) e));
+
 	}
 }

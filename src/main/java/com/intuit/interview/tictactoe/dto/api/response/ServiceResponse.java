@@ -1,8 +1,12 @@
 package com.intuit.interview.tictactoe.dto.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intuit.interview.tictactoe.dto.exception.ServiceException;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collections;
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -39,10 +43,13 @@ public class ServiceResponse<T>
 		this.payload = payload;
 	}
 
-	public ServiceResponse(T payload, ServiceError error)
+	public ServiceResponse(T payload, ServiceException exception)
 	{
-		status = isNull(error) ? OK : ERROR;
+		status = isNull(exception) ? OK : ERROR;
 		this.payload = payload;
-		this.error = error;
+		this.error = new ServiceError(exception.getErrorCode().name(),
+				exception.getMessage(), Objects.isNull(exception.getCause()) ?
+				null :
+				Collections.singletonList(exception.getCause().getMessage()));
 	}
 }

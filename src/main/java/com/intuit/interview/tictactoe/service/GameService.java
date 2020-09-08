@@ -10,7 +10,6 @@ import com.intuit.interview.tictactoe.dto.api.request.GameBeginRequest;
 import com.intuit.interview.tictactoe.dto.api.request.MoveRequest;
 import com.intuit.interview.tictactoe.dto.api.response.GameBegunResponse;
 import com.intuit.interview.tictactoe.dto.api.response.MoveResponse;
-import com.intuit.interview.tictactoe.dto.api.response.State;
 import com.intuit.interview.tictactoe.dto.exception.ServiceException;
 import com.intuit.interview.tictactoe.dto.internal.Player;
 import com.intuit.interview.tictactoe.dto.internal.Position;
@@ -23,7 +22,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import static com.intuit.interview.tictactoe.bo.PositionBO.*;
-import static com.intuit.interview.tictactoe.constants.ErrorCode.COMPUTER_MOVE_FAILED;
+import static com.intuit.interview.tictactoe.constants.ErrorCode.*;
 import static com.intuit.interview.tictactoe.utils.Constants.*;
 
 @Slf4j
@@ -43,7 +42,9 @@ public class GameService
 	private TicTacToeUtilities utilities;
 
 	public GameBegunResponse startAGame(GameBeginRequest request)
+			throws ServiceException
 	{
+		utilities.validateGameBeginRequest(request);
 		Game game;
 		Player player = request.getPlayer();
 		player.setId(utilities.generateUUID());
@@ -57,20 +58,24 @@ public class GameService
 		} catch (Exception e) {
 			log.error("Could not start game due to error : {}", e.getMessage());
 			e.printStackTrace();
-			return new GameBegunResponse(GAME_START_FAILED, NO_GAME_ID);
+			throw new ServiceException(GAME_START_FAILURE, GAME_START_FAILED,
+					e);
 		}
 
 		return new GameBegunResponse(GAME_STARTED, game.getGameId());
 	}
 
 	public MoveResponse registerUserMark(MoveRequest request)
+			throws ServiceException
 	{
+		utilities.validateMoveRequest(request);
 		Position position = request.getPosition();
 		int[] moveArr = new int[] { position.getRow(), position.getCol() };
 
 		Game currentGame = gamesDAO.getGameById(request.getGameId());
 		if (Objects.isNull(currentGame)) {
-			return new MoveResponse(NO_GAME_ERROR, new State());
+			log.error("{}", NO_GAME_ERROR);
+			throw new ServiceException(NO_GAME, NO_GAME_ERROR);
 		}
 		Board board = currentGame.getBoard();
 
@@ -85,14 +90,16 @@ public class GameService
 
 		} catch (Exception e) {
 			log.error("{}", e.getMessage());
-			return new MoveResponse(PLAYER_MARK_NOK, new State());
+			throw new ServiceException(PLAYER_MARK_FAILURE, PLAYER_MARK_NOK, e);
 		}
 
 		//human mark done. computer makes it mark now.
 		try {
 			computerMarkBoard(board);
 		} catch (ServiceException e) {
-			return new MoveResponse(COMPUTER_MARK_NOK, new State());
+			log.error("{}", e.getMessage());
+			throw new ServiceException(COMPUTER_MARK_FAILURE, COMPUTER_MARK_NOK,
+					e);
 		}
 
 		PositionBO winner = board.gameWon();
@@ -170,7 +177,7 @@ public class GameService
 						String message = "Computer failed to make it's move";
 						e.printStackTrace();
 						log.error(message);
-						throw new ServiceException(COMPUTER_MOVE_FAILED,
+						throw new ServiceException(COMPUTER_MARK_FAILURE,
 								message, e);
 					}
 				}
@@ -228,9 +235,7 @@ public class GameService
 			String message = "Computer failed to make it's move";
 			e.printStackTrace();
 			log.error(message);
-			throw new ServiceException(COMPUTER_MOVE_FAILED, message, e);
+			throw new ServiceException(COMPUTER_MARK_FAILURE, message, e);
 		}
 	}
-
-
 }
