@@ -13,6 +13,7 @@ A REST API based n*n Tic-Tac-Toe game designed using SpringBoot framework for a 
 1. Board sizes only of odd numbers are supported.
 2. The implementation of the game is Java.
 3. Although code has descriptive variables and is self-explanatory ,inline comments are there for explanation wherever necessary.
+4. Postman collection is [here](https://www.getpostman.com/collections/120401bd2efaf6203d2d)
 
 ## Assumptions
 
