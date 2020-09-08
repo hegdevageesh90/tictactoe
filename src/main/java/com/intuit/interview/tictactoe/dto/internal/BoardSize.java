@@ -7,5 +7,5 @@ package com.intuit.interview.tictactoe.dto.internal;
  */
 public enum BoardSize
 {
-	ThreeCrossThree, FiveCrossFive, SevenCrossSeven
+	ThreeCrossThree, FourCrossFour, FiveCrossFive, SixCrossSix, SevenCrossSeven
 }

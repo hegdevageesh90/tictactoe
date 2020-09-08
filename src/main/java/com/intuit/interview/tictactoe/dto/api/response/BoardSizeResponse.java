@@ -16,9 +16,12 @@ public class BoardSizeResponse
 	public BoardSizeResponse()
 	{
 		responseString = "Available sizes are : ";
+		int count = 3;
 		for (BoardSize boardSize : BoardSize.values())
 		{
-			responseString += boardSize.name() + " ";
+			responseString += boardSize.name() + "(" + count + "), ";
 		}
+		responseString += "etc.";
+
 	}
 }
