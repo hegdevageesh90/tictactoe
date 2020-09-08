@@ -127,13 +127,7 @@ public class GameService
 
 	private void computerMarkBoard(Board board) throws ServiceException
 	{
-		// For the sake of making the game easier, if O starts, it will select a random position.
 		int size = board.getSize();
-		if (board.empty()) {
-			Random rand = new Random();
-			doMakeAMark(rand.nextInt(size), rand.nextInt(size), board);
-			return;
-		}
 
 		// Favor the middle slot if it is not taken yet.
 		if (board.getBoard()[1][1] == EMPTY) {
@@ -141,42 +135,42 @@ public class GameService
 			return;
 		}
 
-		int largest = 0;
+		int largestIndex = 0;
 		for (int i = 0; i < board.getSums().length; i++)
-			if (board.getSums()[i] > board.getSums()[largest])
-				largest = i;
+			if (board.getSums()[i] > board.getSums()[largestIndex])
+				largestIndex = i;
 
 		// If Computer is "winning", let's be greedy.
-		int smallest = 0;
+		int smallestIndex = 0;
 		for (int i = 0; i < board.getSums().length; i++)
-			if (board.getSums()[i] < board.getSums()[smallest])
-				smallest = i;
+			if (board.getSums()[i] < board.getSums()[smallestIndex])
+				smallestIndex = i;
 
 		Random rand = new Random();
-		if (board.getSums()[smallest] < -(size / 2 + rand.nextInt(1))
-				&& -(board.getSums()[smallest]) > board.getSums()[largest])
-			largest = smallest;
+		if (board.getSums()[smallestIndex] < -(size / 2 + rand.nextInt(1))
+				&& -(board.getSums()[smallestIndex]) > board
+				.getSums()[largestIndex])
+			largestIndex = smallestIndex;
 
 			// Choose a random slot if sum of row/col/diag is not more than half the board size.
-		else if (board.getSums()[largest] < size / 2 + 1) {
+		else if (board.getSums()[largestIndex] < size / 2 + 1) {
 			rand = new Random();
 			try {
 				doMakeAMark(rand.nextInt(size), rand.nextInt(size), board);
 			} catch (Exception e) {
 				doMakeAMark(rand.nextInt(size), rand.nextInt(size), board);
 			}
-
 			return;
 		}
 
-		if (largest < board.getSize()) {
+		if (largestIndex < board.getSize()) {
 			// It's a row.
-			PositionBO[] row = board.getBoard()[largest];
+			PositionBO[] row = board.getBoard()[largestIndex];
 
 			for (int pos = 0; pos < row.length; pos++) {
 				if (row[pos] == EMPTY) {
 					try {
-						board.setPosition(largest, pos, O);
+						board.setPosition(largestIndex, pos, O);
 						return;
 					} catch (Exception e) {
 						String message = "Computer failed to make it's mark";
@@ -187,8 +181,8 @@ public class GameService
 					}
 				}
 			}
-		} else if (largest >= size && largest < 2 * size) {
-			int col = largest - size;
+		} else if (largestIndex >= size && largestIndex < 2 * size) {
+			int col = largestIndex - size;
 
 			for (int r = 0; r < size; r++) {
 				try {
@@ -199,7 +193,7 @@ public class GameService
 				}
 			}
 		} else {
-			if (largest == size * 2) {
+			if (largestIndex == size * 2) {
 				for (int i = 0; i < size; i++) {
 					try {
 						board.setPosition(i, i, O);
@@ -208,7 +202,7 @@ public class GameService
 						//Do nothing. We want to keep going.
 					}
 				}
-			} else if (largest == size * 2 + 1) {
+			} else if (largestIndex == size * 2 + 1) {
 				for (int r = 0, c = size - 1; r < size && c >= 0; r++, c--) {
 					try {
 						board.setPosition(r, c, O);
