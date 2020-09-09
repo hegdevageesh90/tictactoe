@@ -3,6 +3,7 @@ package com.intuit.interview.tictactoe.service;
 import com.intuit.interview.tictactoe.bo.Game;
 import com.intuit.interview.tictactoe.dao.GamesDAO;
 import com.intuit.interview.tictactoe.dto.api.response.StateResponse;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @author Vageesh Hegde
  */
 @Service
+@Getter
 public class BoardService
 {
 	@Autowired

@@ -33,6 +33,8 @@ build/
 /mvnw.cmd
 .mvn
 
+.diffblue/
+
 ### Maven Release ###
 pom.xml.tag
 pom.xml.releaseBackup
